@@ -1,8 +1,8 @@
 ﻿using Fleet_Assets_Backend.Application.Dtos.EventLog;
 using Fleet_Assets_Backend.Application.Interfaces;
-using Fleet_Assets_Backend.Infrasturcture.Interfaces;
+using Fleet_Assets_Backend.Infrastructure.Interfaces;
 
-namespace Fleet_Assets_Backend.Application.Events;
+namespace Fleet_Assets_Backend.Application.Services;
 
 public class EventQueryService(IEventLogRepository events) : IEventQueryService
 {

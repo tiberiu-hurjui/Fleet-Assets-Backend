@@ -1,6 +1,6 @@
 ﻿using Fleet_Assets_Backend.Domain.Entities;
 
-namespace Fleet_Assets_Backend.Infrasturcture.Interfaces;
+namespace Fleet_Assets_Backend.Infrastructure.Interfaces;
 
 public interface IEventLogRepository
 {

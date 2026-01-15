@@ -1,9 +1,9 @@
 ﻿using Fleet_Assets_Backend.Domain.Entities;
-using Fleet_Assets_Backend.Infrasturcture.Interfaces;
-using Fleet_Assets_Backend.Infrasturcture.Persistence;
+using Fleet_Assets_Backend.Infrastructure.Interfaces;
+using Fleet_Assets_Backend.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
-namespace Fleet_Assets_Backend.Infrasturcture.Repositories;
+namespace Fleet_Assets_Backend.Infrastructure.Repositories;
 
 public class VehicleRepository(FleetAssetsDbContext db) : IVehicleRepository
 {

@@ -1,9 +1,9 @@
-using Fleet_Assets_Backend.Application.Events;
+using Fleet_Assets_Backend.Api.Middleware;
 using Fleet_Assets_Backend.Application.Interfaces;
 using Fleet_Assets_Backend.Application.Services;
-using Fleet_Assets_Backend.Infrasturcture.Interfaces;
-using Fleet_Assets_Backend.Infrasturcture.Persistence;
-using Fleet_Assets_Backend.Infrasturcture.Repositories;
+using Fleet_Assets_Backend.Infrastructure.Interfaces;
+using Fleet_Assets_Backend.Infrastructure.Persistence;
+using Fleet_Assets_Backend.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -50,6 +50,8 @@ app.Use(async (context, next) =>
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.MapControllers();
 

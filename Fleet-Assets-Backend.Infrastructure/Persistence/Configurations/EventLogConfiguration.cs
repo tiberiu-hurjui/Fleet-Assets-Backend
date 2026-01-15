@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 
-namespace Fleet_Assets_Backend.Infrasturcture.Persistence.Configurations;
+namespace Fleet_Assets_Backend.Infrastructure.Persistence.Configurations;
 
 public class EventLogConfiguration : IEntityTypeConfiguration<EventLog>
 {

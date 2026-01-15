@@ -3,7 +3,7 @@ using Fleet_Assets_Backend.Application.Interfaces;
 using Fleet_Assets_Backend.Domain.Entities;
 using Fleet_Assets_Backend.Domain.Enums;
 
-using Fleet_Assets_Backend.Infrasturcture.Interfaces;
+using Fleet_Assets_Backend.Infrastructure.Interfaces;
 using System.Text.Json;
 
 namespace Fleet_Assets_Backend.Application.Services;

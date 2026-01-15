@@ -1,4 +1,4 @@
-﻿using Fleet_Assets_Backend.Infrasturcture.Persistence;
+﻿using Fleet_Assets_Backend.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Fleet_Assets_Backend.Api.Controllers;
