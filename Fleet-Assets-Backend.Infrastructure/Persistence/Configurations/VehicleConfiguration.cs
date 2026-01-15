@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Fleet_Assets_Backend.Infrasturcture.Persistence.Configurations;
+namespace Fleet_Assets_Backend.Infrastructure.Persistence.Configurations;
 
 public class VehicleConfiguration : IEntityTypeConfiguration<Vehicle>
 {

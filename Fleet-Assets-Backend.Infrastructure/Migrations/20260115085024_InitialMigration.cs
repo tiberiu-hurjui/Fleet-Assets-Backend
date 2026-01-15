@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Fleet_Assets_Backend.Infrasturcture.Migrations
+namespace Fleet_Assets_Backend.Infrastructure.Migrations
 {
     /// <inheritdoc />
     public partial class InitialMigration : Migration
