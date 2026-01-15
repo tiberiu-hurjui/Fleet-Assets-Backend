@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Fleet-Assets-Backend.Application\Fleet-Assets-Backend.Application.csproj" />
     <ProjectReference Include="..\Fleet-Assets-Backend.Infrasturcture\Fleet-Assets-Backend.Infrasturcture.csproj" />
   </ItemGroup>
 
