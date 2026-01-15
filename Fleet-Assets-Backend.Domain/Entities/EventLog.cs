@@ -1,5 +1,4 @@
 ﻿using Fleet_Assets_Backend.Domain.Enums;
-using System;
 
 namespace Fleet_Assets_Backend.Domain.Entities;
 

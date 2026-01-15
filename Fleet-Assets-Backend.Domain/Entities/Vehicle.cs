@@ -15,10 +15,8 @@ public class Vehicle
     public DateTime CreatedAtUtc { get; private set; } = DateTime.UtcNow;
     public DateTime UpdatedAtUtc { get; private set; } = DateTime.UtcNow;
 
-    // EF Core concurrency token (mapped in Infrastructure)
-    public byte[] RowVersion { get; private set; } = Array.Empty<byte>();
+    public byte[] RowVersion { get; private set; } = [];
 
-    // EF constructor
     private Vehicle() { }
 
     public Vehicle(string name, string type, string? lastKnownLocation = null)
