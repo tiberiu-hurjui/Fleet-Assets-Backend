@@ -32,21 +32,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.Use(async (context, next) =>
-{
-    const string header = "X-Correlation-Id";
-    if (!context.Request.Headers.TryGetValue(header, out var cid) || cid.Count == 0)
-    {
-        context.Response.Headers[header] = Guid.NewGuid().ToString();
-    }
-    else
-    {
-        context.Response.Headers[header] = cid.ToString();
-    }
-
-    await next();
-});
-
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
