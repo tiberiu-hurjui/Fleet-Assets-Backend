@@ -1,4 +1,4 @@
-﻿using Fleet_Assets_Backend.Domain.Enums;
+using Fleet_Assets_Backend.Domain.Enums;
 
 namespace Fleet_Assets_Backend.Domain.Entities;
 
