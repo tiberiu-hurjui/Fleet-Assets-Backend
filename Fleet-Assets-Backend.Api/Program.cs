@@ -32,16 +32,24 @@ app.UseSwaggerUI();
 app.Use(async (context, next) =>
 {
     const string header = "X-Correlation-Id";
-    if (!context.Request.Headers.TryGetValue(header, out var cid) || cid.Count == 0)
-    {
-        context.Response.Headers[header] = Guid.NewGuid().ToString();
-    }
-    else
-    {
-        context.Response.Headers[header] = cid.ToString();
-    }
 
-    await next();
+    var correlationId =
+        context.Request.Headers.TryGetValue(header, out var cid) && cid.Count > 0
+            ? cid.ToString()
+            : Guid.NewGuid().ToString();
+
+    context.Response.Headers[header] = correlationId;
+
+    using (context.RequestServices
+        .GetRequiredService<ILoggerFactory>()
+        .CreateLogger("Correlation")
+        .BeginScope(new Dictionary<string, object>
+        {
+            ["CorrelationId"] = correlationId
+        }))
+    {
+        await next();
+    }
 });
 
 app.UseHttpsRedirection();
