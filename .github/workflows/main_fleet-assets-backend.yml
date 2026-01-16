@@ -1,4 +1,4 @@
-name: Build and deploy ASP.Net Core app to Azure Web App - fleet-asssets-backend
+name: Build and deploy ASP.Net Core app to Azure Web App - fleet-assets-backend
 
 on:
   push:
@@ -62,6 +62,7 @@ jobs:
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'fleet-asssets-backend'
+          app-name: 'fleet-assets-backend'
           slot-name: 'Production'
           package: ./myapp
+
