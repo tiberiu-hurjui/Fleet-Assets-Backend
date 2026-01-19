@@ -1,4 +1,5 @@
 ﻿using Fleet_Assets_Backend.Application.Dtos.Vehicle;
+using Fleet_Assets_Backend.Application.Exceptions;
 using Fleet_Assets_Backend.Application.Interfaces;
 using Fleet_Assets_Backend.Domain.Entities;
 using Fleet_Assets_Backend.Domain.Enums;
@@ -48,9 +49,7 @@ public class VehicleService(IVehicleRepository vehicles, IEventLogRepository eve
 
     public async Task<VehicleDto?> UpdateAsync(Guid id, UpdateVehicleRequest request, Guid correlationId, string? actor, CancellationToken ct)
     {
-        var vehicle = await _vehicles.GetByIdAsync(id, ct);
-        if (vehicle is null) return null;
-
+        var vehicle = await _vehicles.GetByIdAsync(id, ct) ?? throw new VehicleNotFoundException(id);
         var before = new { vehicle.Name, vehicle.Type, Status = vehicle.Status.ToString(), vehicle.LastKnownLocation };
 
         vehicle.UpdateDetails(request.Name, request.Type, request.LastKnownLocation);

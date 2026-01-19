@@ -46,7 +46,7 @@ public class VehiclesController(IVehicleService service) : ControllerBase
         var correlationId = GetOrCreateCorrelationId();
         var updated = await _service.UpdateAsync(id, request, correlationId, actor: "system", ct);
 
-        return updated is null ? NotFound() : Ok(updated);
+        return Ok(updated);
     }
 
     [HttpPatch("{id:guid}/status")]

@@ -1,5 +1,6 @@
-﻿using System.Text.Json;
+﻿using Fleet_Assets_Backend.Application.Exceptions;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 
 namespace Fleet_Assets_Backend.Api.Middleware;
 
@@ -23,6 +24,12 @@ public sealed class ExceptionHandlingMiddleware(RequestDelegate next, ILogger<Ex
         {
             _logger.LogWarning(ex, "Invalid operation: {Message}", ex.Message);
             await WriteProblem(context, StatusCodes.Status409Conflict, "Conflict", ex.Message);
+        }
+
+        catch (VehicleNotFoundException ex)
+        {
+            _logger.LogWarning(ex, "Vehicle not found. VehicleId={VehicleId}", ex.VehicleId);
+            await WriteProblem(context, StatusCodes.Status404NotFound, "Not Found", "Vehicle not found.");
         }
         catch (Exception ex)
         {
