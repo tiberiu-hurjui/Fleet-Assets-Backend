@@ -30,39 +30,25 @@ public class HealthController(FleetAssetsDbContext db, ILogger<HealthController>
     [HttpGet("ready")]
     public async Task<IActionResult> Ready(CancellationToken ct)
     {
+        using var timeoutCts = CancellationTokenSource.CreateLinkedTokenSource(ct);
+        timeoutCts.CancelAfter(TimeSpan.FromSeconds(2));
+
         try
         {
-            var canConnect = await _db.Database.CanConnectAsync(ct);
+            var canConnect = await _db.Database.CanConnectAsync(timeoutCts.Token);
             if (!canConnect)
-            {
-                return StatusCode(StatusCodes.Status503ServiceUnavailable, new
-                {
-                    status = "unhealthy",
-                    check = "ready",
-                    dependency = "database",
-                    utc = DateTime.UtcNow
-                });
-            }
+                return StatusCode(503, new { status = "unhealthy", check = "ready", dependency = "database", utc = DateTime.UtcNow });
 
-            return Ok(new
-            {
-                status = "ok",
-                check = "ready",
-                dependency = "database",
-                utc = DateTime.UtcNow
-            });
+            return Ok(new { status = "ok", check = "ready", dependency = "database", utc = DateTime.UtcNow });
+        }
+        catch (OperationCanceledException)
+        {
+            return StatusCode(503, new { status = "unhealthy", check = "ready", dependency = "database", error = "Timeout", utc = DateTime.UtcNow });
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Readiness check failed.");
-            return StatusCode(StatusCodes.Status503ServiceUnavailable, new
-            {
-                status = "unhealthy",
-                check = "ready",
-                dependency = "database",
-                error = ex.GetType().Name,
-                utc = DateTime.UtcNow
-            });
+            return StatusCode(503, new { status = "unhealthy", check = "ready", dependency = "database", error = ex.GetType().Name, utc = DateTime.UtcNow });
         }
     }
 }
