@@ -30,6 +30,19 @@ public class HealthController(FleetAssetsDbContext db, ILogger<HealthController>
     [HttpGet("ready")]
     public async Task<IActionResult> Ready(CancellationToken ct)
     {
+        var instanceId = Environment.GetEnvironmentVariable("WEBSITE_INSTANCE_ID") ?? "unknown";
+
+        if (instanceId == "7c237f4c370d")
+        {
+            return StatusCode(StatusCodes.Status503ServiceUnavailable, new
+            {
+                status = "unhealthy-demo",
+                check = "ready",
+                instanceId,
+                utc = DateTime.UtcNow
+            });
+        }
+
         using var timeoutCts = CancellationTokenSource.CreateLinkedTokenSource(ct);
         timeoutCts.CancelAfter(TimeSpan.FromSeconds(10));
 
@@ -37,18 +50,18 @@ public class HealthController(FleetAssetsDbContext db, ILogger<HealthController>
         {
             var canConnect = await _db.Database.CanConnectAsync(timeoutCts.Token);
             if (!canConnect)
-                return StatusCode(503, new { status = "unhealthy", check = "ready", dependency = "database", utc = DateTime.UtcNow });
+                return StatusCode(503, new { status = "unhealthy", check = "ready", dependency = "database", instanceId, utc = DateTime.UtcNow });
 
-            return Ok(new { status = "ok", check = "ready", dependency = "database", utc = DateTime.UtcNow });
+            return Ok(new { status = "ok", check = "ready", dependency = "database", instanceId, utc = DateTime.UtcNow });
         }
         catch (OperationCanceledException)
         {
-            return StatusCode(503, new { status = "unhealthy", check = "ready", dependency = "database", error = "Timeout", utc = DateTime.UtcNow });
+            return StatusCode(503, new { status = "unhealthy", check = "ready", dependency = "database", error = "Timeout", instanceId, utc = DateTime.UtcNow });
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Readiness check failed.");
-            return StatusCode(503, new { status = "unhealthy", check = "ready", dependency = "database", error = ex.GetType().Name, utc = DateTime.UtcNow });
+            return StatusCode(503, new { status = "unhealthy", check = "ready", dependency = "database", error = ex.GetType().Name, instanceId, utc = DateTime.UtcNow });
         }
     }
 }
