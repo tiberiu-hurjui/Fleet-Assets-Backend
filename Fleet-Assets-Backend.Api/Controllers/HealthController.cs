@@ -31,7 +31,7 @@ public class HealthController(FleetAssetsDbContext db, ILogger<HealthController>
     public async Task<IActionResult> Ready(CancellationToken ct)
     {
         using var timeoutCts = CancellationTokenSource.CreateLinkedTokenSource(ct);
-        timeoutCts.CancelAfter(TimeSpan.FromSeconds(2));
+        timeoutCts.CancelAfter(TimeSpan.FromSeconds(10));
 
         try
         {
