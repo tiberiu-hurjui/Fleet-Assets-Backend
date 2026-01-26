@@ -11,4 +11,5 @@ public interface IVehicleService
     Task<VehicleDto?> UpdateAsync(Guid id, UpdateVehicleRequest request, Guid correlationId, string? actor, CancellationToken ct);
     Task<VehicleDto?> ChangeStatusAsync(Guid id, ChangeVehicleStatusRequest request, Guid correlationId, string? actor, CancellationToken ct);
     Task<bool> DeleteAsync(Guid id, Guid correlationId, string? actor, CancellationToken ct);
+    Task<int> SlowDbDemoAsync(CancellationToken ct);
 }

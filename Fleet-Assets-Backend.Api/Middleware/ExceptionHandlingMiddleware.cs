@@ -1,5 +1,7 @@
 ﻿using Fleet_Assets_Backend.Application.Exceptions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
+using Polly.Timeout;
 using System.Text.Json;
 
 namespace Fleet_Assets_Backend.Api.Middleware;
@@ -30,6 +32,11 @@ public sealed class ExceptionHandlingMiddleware(RequestDelegate next, ILogger<Ex
         {
             _logger.LogWarning(ex, "Vehicle not found. VehicleId={VehicleId}", ex.VehicleId);
             await WriteProblem(context, StatusCodes.Status404NotFound, "Not Found", "Vehicle not found.");
+        }
+        catch (SqlException ex) when (ex.Message.Contains("Operation cancelled by user", StringComparison.OrdinalIgnoreCase))
+        {
+            _logger.LogWarning(ex, "DB command cancelled (treated as timeout).");
+            await WriteProblem(context, 503, "Service Unavailable", "Database did not respond in time.");
         }
         catch (Exception ex)
         {

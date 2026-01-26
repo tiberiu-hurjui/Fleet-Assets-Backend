@@ -139,4 +139,9 @@ public class VehicleService(IVehicleRepository vehicles, IEventLogRepository eve
             v.CreatedAtUtc,
             v.UpdatedAtUtc
         );
+
+    public async Task<int> SlowDbDemoAsync(CancellationToken ct)
+    {
+        return await _vehicles.SlowDbDemoAsync(ct);
+    }
 }

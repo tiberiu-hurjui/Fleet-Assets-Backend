@@ -8,4 +8,5 @@ public interface IVehicleRepository
     Task AddAsync(Vehicle vehicle, CancellationToken ct);
     Task DeleteAsync(Vehicle vehicle, CancellationToken ct);
     Task SaveChangesAsync(CancellationToken ct);
+    Task<int> SlowDbDemoAsync(CancellationToken ct);
 }

@@ -71,6 +71,13 @@ public class VehiclesController(IVehicleService service) : ControllerBase
         return deleted ? NoContent() : NotFound();
     }
 
+    [HttpGet("demo/db/slow")]
+    public async Task<ActionResult<int>> SlowDbDemo(CancellationToken ct)
+    {
+        var result = await _service.SlowDbDemoAsync(ct);
+        return Ok(result);
+    }
+
     private Guid GetOrCreateCorrelationId()
     {
         if (Request.Headers.TryGetValue("X-Correlation-Id", out var values) &&
